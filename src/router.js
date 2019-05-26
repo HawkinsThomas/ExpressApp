@@ -22,7 +22,7 @@ router.post('/login', (req, res, next) => {
     .next();
 });
 
-router.get('/all-prod', (req, res, next) => {
+router.get('/product', (req, res, next) => {
   res.sendStatus(200)
     .next();
 });
