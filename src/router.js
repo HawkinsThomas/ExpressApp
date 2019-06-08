@@ -22,6 +22,11 @@ router.post('/login', (req, res, next) => {
     .next();
 });
 
+router.post('/register', (req, res, next) => {
+  res.sendStatus(200)
+    .next();
+})
+
 router.get('/product', (req, res, next) => {
   res.sendStatus(200)
     .next();
@@ -32,7 +37,7 @@ router.get('/product/:id', (req, res, next) => {
     .next();
 });
 
-router.post('/product/', (req, res, next) => {
+router.post('/product', (req, res, next) => {
   res.sendStatus(200)
     .next();
 });
