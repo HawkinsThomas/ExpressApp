@@ -17,14 +17,21 @@ router.post('/login', (req, res, next) => {
     .next();
 });
 
-router.get('/product', (req, res, next) => {
-  res.sendStatus(200)
-    .next();
+router.get('/product', async (req, res, next) => {
+  db.getAllProducts()
+    .then((allProducts) => {
+      res.json(allProducts);
+    });
 });
 
 router.get('/product/:id', (req, res, next) => {
-  res.sendStatus(200)
-    .next();
+  const { id } = req.params;
+  console.log(id)
+  db.getAllProducts()
+    .then((allProducts) => {
+      res.json({ [id]: allProducts[id] });
+    })
+  
 });
 
 router.post('/product', (req, res, next) => {

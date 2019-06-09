@@ -1,4 +1,11 @@
 const fs = require('fs');
+const util = require('util');
+const path = require('path');
+
+let readFile = util.promisify(fs.readFile);
+//let writeFile = util.promisify(fs.writeFile);
+
+const productsPath = path.resolve('./src/db/product.json');
 
 const register = (newUser) => {
   fs.readFile('./src/db/users.json', 'utf8', (err, data) => {
@@ -34,5 +41,13 @@ const createProduct = (newProduct) => {
   });
 };
 
+function getAllProducts() {
+  return readFile(productsPath)
+    .then((json) => {
+      return JSON.parse(json);
+    });
+};
+
 module.exports.register = register;
 module.exports.createProduct = createProduct;
+module.exports.getAllProducts = getAllProducts;
