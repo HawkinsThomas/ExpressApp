@@ -1,0 +1,17 @@
+{
+  "Thomas": {
+    "password": "test"
+  },
+  "Bob": {
+    "password": "asl;dkfjs;ld"
+  },
+  "Martin": {
+    "password": "newpass"
+  },
+  "Bea": {
+    "password": "abc123"
+  },
+  "Henry": {
+    "password": "Henry_is_cool"
+  }
+}
