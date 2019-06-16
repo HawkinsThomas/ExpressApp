@@ -31,7 +31,6 @@ router.get('/product/:id', (req, res, next) => {
     .then((allProducts) => {
       res.json({ [id]: allProducts[id] });
     })
-  
 });
 
 router.post('/product', (req, res, next) => {
