@@ -1,15 +1,12 @@
 'use strict';
 
 const express = require('express');
-const db = require('./db');
+const db = require('./../db');
+const productsRoutes = require('./products');
 
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
-  res.render('home', {
-    name: 'Giovanni'
-  });
-});
+router.get('/', productsRoutes.allProducts);
 
 router.post('/register', (req, res, next) => {
   console.log("someone is trying to register");

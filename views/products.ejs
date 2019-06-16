@@ -1,7 +1,14 @@
-<HTML>
+<!doctype html>
+<html lang = "eng">
   <head>
+   <link rel="stylesheet", href="/css/bootstrap.min.css"/>
   </head>
   <body>
-    <%=name%>
+    <header>
+    </header>
+    <section>
+      <h1> <%-name%> </h1>
+      <%- include('partials/table.ejs'); %>
+    </section>
   </body>
-</HTML>
+</html>
