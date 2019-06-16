@@ -5,6 +5,12 @@ const db = require('./db');
 
 const router = express.Router();
 
+router.get('/', (req, res, next) => {
+  res.render('home', {
+    name: 'Giovanni'
+  });
+});
+
 router.post('/register', (req, res, next) => {
   console.log("someone is trying to register");
   db.register(req.body);
