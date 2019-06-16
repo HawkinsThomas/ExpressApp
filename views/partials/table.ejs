@@ -7,14 +7,12 @@
     </tr>
   </thead>
   <tbody>
-    <%products.forEach((product) => { %>
+    <%Object.keys(products).forEach((product) => { %>
       <tr>
-        <td><%=product.desc%></td>
-        <td>poop2</td>
-        <td>poop3</td>
+        <td><%=product%></td>
+        <td><%=products[product].desc%></td>
+        <td><%=products[product].brand%></td>
       </tr>
     <% });%>
-    
   </tbody>
-</table>
 </table>
