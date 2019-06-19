@@ -1,15 +1,7 @@
 {
-  "baseball": {
-    "desc": "real leather",
-    "brand": "Wilson"
-  },
   "toothpaste": {
     "desc": "anit-cavity, whitening",
     "brand": "Colegate"
-  },
-  "condom": {
-    "desc": "XXXXL",
-    "brand": "Trojan"
   },
   "laptop": {
     "desc": "Macbook Pro",

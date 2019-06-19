@@ -30,8 +30,8 @@ const createProduct = (newProduct) => {
     else {
       const products = JSON.parse(data);
       if (products[Object.keys(newProduct)[0]]){
-        console.log("product already exists");
-        return
+        console.log('product already exists');
+        return;
       }
       updatedProducts = {...products, ...newProduct};
       fs.writeFile('./src/db/product.json', JSON.stringify(updatedProducts, null, 2), 'utf8', (err) => {
@@ -41,6 +41,23 @@ const createProduct = (newProduct) => {
   });
 };
 
+const deleteProduct = (product) => {
+  fs.readFile('./src/db/product.json', 'utf8', (err, data) => {
+    if (err) throw err;
+    else {
+      const products = JSON.parse(data);
+      if (!(products[product])){
+        console.log('product does not exist');
+        return;
+      }
+      delete products[product];
+      fs.writeFile('./src/db/product.json', JSON.stringify(products, null, 2), 'utf8', (err) => {
+        if (err) throw err;
+      });
+    }
+  });
+}
+
 function getAllProducts() {
   return readFile(productsPath)
     .then((json) => {
@@ -48,6 +65,9 @@ function getAllProducts() {
     });
 };
 
-module.exports.register = register;
-module.exports.createProduct = createProduct;
-module.exports.getAllProducts = getAllProducts;
+module.exports = {
+  register: register,
+  createProduct: createProduct,
+  getAllProducts: getAllProducts,
+  deleteProduct: deleteProduct,
+}

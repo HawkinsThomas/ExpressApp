@@ -38,8 +38,7 @@ router.get('/product/:id', (req, res, next) => {
 
 router.post('/product', (req, res, next) => {
   db.createProduct(req.body);
-  res.sendStatus(200)
-    .next();
+  res.sendStatus(200);
 });
 
 router.put('/product/:id', (req, res, next) => {
@@ -48,8 +47,9 @@ router.put('/product/:id', (req, res, next) => {
 });
 
 router.delete('/product/:id', (req, res, next) => {
-  res.sendStatus(200)
-    .next();
+  const { id } = req.params;
+  db.deleteProduct(id);
+  res.sendStatus(200);
 });
 
 module.exports = router;
