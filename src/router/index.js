@@ -42,6 +42,7 @@ router.post('/product', (req, res, next) => {
 });
 
 router.put('/product/:id', (req, res, next) => {
+  db.updateProduct(req.body);
   res.sendStatus(200)
     .next();
 });

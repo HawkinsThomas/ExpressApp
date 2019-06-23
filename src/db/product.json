@@ -10,5 +10,10 @@
   "Giovanni": {
     "desc": "Rad dude",
     "brand": "Sovernigo"
+  },
+  "Coffee": {
+    "desc": "Dark roast",
+    "brand": "Starbucks",
+    "taste": "bad"
   }
 }

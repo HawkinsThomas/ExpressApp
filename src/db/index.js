@@ -41,6 +41,23 @@ const createProduct = (newProduct) => {
   });
 };
 
+const updateProduct = (newProduct) => {
+  fs.readFile('./src/db/product.json', 'utf8', (err, data) => {
+    if (err) throw err;
+    else {
+      const products = JSON.parse(data);
+      if (!(products[Object.keys(newProduct)[0]])){
+        console.log('product does not exist ');
+        return;
+      }
+      updatedProducts = {...products, ...newProduct};
+      fs.writeFile('./src/db/product.json', JSON.stringify(updatedProducts, null, 2), 'utf8', (err) => {
+        if (err) throw err;
+      });
+    }
+  });
+};
+
 const deleteProduct = (product) => {
   fs.readFile('./src/db/product.json', 'utf8', (err, data) => {
     if (err) throw err;
@@ -70,4 +87,5 @@ module.exports = {
   createProduct: createProduct,
   getAllProducts: getAllProducts,
   deleteProduct: deleteProduct,
+  updateProduct: updateProduct,
 }
