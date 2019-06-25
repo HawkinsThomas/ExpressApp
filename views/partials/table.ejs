@@ -1,0 +1,18 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Product Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Brand</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%Object.keys(products).forEach((product) => { %>
+      <tr>
+        <td><%=product%></td>
+        <td><%=products[product].desc%></td>
+        <td><%=products[product].brand%></td>
+      </tr>
+    <% });%>
+  </tbody>
+</table>

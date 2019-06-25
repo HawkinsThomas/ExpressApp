@@ -1,13 +1,22 @@
-[
-  {
-    "name": "baseball",
+{
+  "baseball": {
     "desc": "real leather",
     "brand": "Wilson"
   },
-
-  {
-    "name": "toothpaste",
+  "toothpaste": {
     "desc": "anit-cavity, whitening",
     "brand": "Colegate"
+  },
+  "condom": {
+    "desc": "XXXXL",
+    "brand": "Trojan"
+  },
+  "laptop": {
+    "desc": "Macbook Pro",
+    "brand": "Apple"
+  },
+  "Giovanni": {
+    "desc": "Rad dude",
+    "brand": "Sovernigo"
   }
-]
+}
