@@ -3,6 +3,7 @@
 const fs = require('fs');
 const util = require('util');
 const path = require('path');
+const bcrypt = require('bcrypt');
 
 const readFile = util.promisify(fs.readFile);
 //let writeFile = util.promisify(fs.writeFile);
@@ -14,13 +15,20 @@ const register = (newUser) => {
   readFile(usersPath)
     .then((data) => {
       const users = JSON.parse(data);
-      if (users[Object.keys(newUser)[0]]){
+      const newUsername = Object.keys(newUser)[0];
+      const newPass = newUser[newUsername].password;
+      if (users[newUsername]){
         console.log("user already exists");
         return
       }
-      updatedUsers = {...users, ...newUser};
-      fs.writeFile(usersPath, JSON.stringify(updatedUsers, null, 2), 'utf8', (err) => {
-        if (err) throw err;
+      console.log(newPass);
+      bcrypt.hash(newPass, 10, function(err, hash){
+          if (err) throw err;
+        const hashedUser = {...newUser, ...{[newUsername]: {'password': hash}}};
+        const updatedUsers = {...users, ...hashedUser};
+        fs.writeFile(usersPath, JSON.stringify(updatedUsers, null, 2), 'utf8', (err) => {
+          if (err) throw err;
+        });
       });
   });
 };
