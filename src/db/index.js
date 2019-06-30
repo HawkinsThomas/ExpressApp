@@ -33,6 +33,28 @@ const register = (newUser) => {
   });
 };
 
+const login = (user) => {
+
+  const username = Object.keys(user)[0];
+  const password = user[username].password;
+  if (!(doesUserExist)) {
+    console.log('user does not exist');
+    return;
+  }
+  readFile(usersPath)
+    .then((data) => {
+      const users = JSON.parse(data);
+      bcrypt.compare(password, users[username].password, function(err, res) {
+        if (res) {
+          console.log('passwords match');
+        } else {
+          console.log('passwords do not match');
+        }
+        return;
+      });
+  });
+};
+
 const createProduct = (newProduct) => {
   readFile(productsPath)
     .then((data) => {
@@ -85,10 +107,22 @@ function getAllProducts() {
     });
 };
 
+function doesUserExist(user) {
+  readFile(usersPath)
+    .then((data) => {
+      const users = JSON.parse(data);
+      const username = Object.keys(newUser)[0];
+      if (users[username])
+        return true;
+      return false;
+    });
+}
+
 module.exports = {
-  register: register,
-  createProduct: createProduct,
-  getAllProducts: getAllProducts,
-  deleteProduct: deleteProduct,
-  updateProduct: updateProduct,
+  register,
+  createProduct,
+  getAllProducts,
+  deleteProduct,
+  updateProduct,
+  login,
 }

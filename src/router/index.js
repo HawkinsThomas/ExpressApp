@@ -16,8 +16,8 @@ router.post('/register', (req, res, next) => {
 });
 
 router.post('/login', (req, res, next) => {
-  res.sendStatus(200)
-    .next();
+  db.login(req.body);
+  res.sendStatus(200);
 });
 
 router.get('/product', async (req, res, next) => {
