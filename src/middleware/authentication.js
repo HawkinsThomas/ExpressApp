@@ -13,8 +13,7 @@ function authenticate(req, res, next) {
 function parseUser(req, res, next) {
   if (req.session.username === undefined) {
     req.session.username = null;
-  } else if (req.body.username === process.env.USERNAME
-      && req.body.password === process.env.PASSWORD) {
+  } else if (db.login({username: req.body.username, password: req.body.password})) {
     req.session.username = req.body.username;
     res.redirect('/');
   }
