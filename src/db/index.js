@@ -15,16 +15,16 @@ const register = (newUser) => {
   readFile(usersPath)
     .then((data) => {
       const users = JSON.parse(data);
-      const newUsername = Object.keys(newUser)[0];
-      const newPass = newUser[newUsername].password;
+      const newUsername = newUser.username;
+      const newPass = newUser.password;
       if (users[newUsername]){
         console.log("user already exists");
         return
       }
       console.log(newPass);
       bcrypt.hash(newPass, 10, function(err, hash){
-          if (err) throw err;
-        const hashedUser = {...newUser, ...{[newUsername]: {'password': hash}}};
+        if (err) throw err;
+        const hashedUser = {[newUsername]: {'password': hash}};
         const updatedUsers = {...users, ...hashedUser};
         fs.writeFile(usersPath, JSON.stringify(updatedUsers, null, 2), 'utf8', (err) => {
           if (err) throw err;
@@ -34,26 +34,30 @@ const register = (newUser) => {
 };
 
 const login = (user) => {
-
-  const username = Object.keys(user)[0];
-  const password = user[username].password;
-  if (!(doesUserExist)) {
-    console.log('user does not exist');
-    return;
-  }
-  readFile(usersPath)
-    .then((data) => {
-      const users = JSON.parse(data);
-      bcrypt.compare(password, users[username].password, function(err, res) {
-        if (res) {
-          console.log('passwords match');
-        } else {
-          console.log('passwords do not match');
-        }
-        return;
-      });
-  });
-};
+  const username = user.username;
+  const password = user.password;
+  return doesUserExist(user.username)
+    .then((userExists) => {
+      if (!(userExists)) {
+        console.log('user does not exist')
+        return false;
+      } else {
+        readFile(usersPath)
+          .then((data) => {
+            const users = JSON.parse(data);
+            bcrypt.compare(password, users[username].password, function(err, res) {
+              if (res) {
+                console.log('login successful');
+                return true;
+              } else {
+                console.log('login failed')
+                return false;
+              }
+            });
+          });
+      }
+    });
+}
 
 const createProduct = (newProduct) => {
   readFile(productsPath)
@@ -108,13 +112,10 @@ function getAllProducts() {
 };
 
 function doesUserExist(user) {
-  readFile(usersPath)
+  return readFile(usersPath)
     .then((data) => {
       const users = JSON.parse(data);
-      const username = Object.keys(newUser)[0];
-      if (users[username])
-        return true;
-      return false;
+      return (!!(users[user]))
     });
 }
 
