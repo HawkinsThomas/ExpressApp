@@ -16,8 +16,8 @@ router.post('/register', (req, res, next) => {
 });
 
 router.post('/login', (req, res, next) => {
-  res.sendStatus(200)
-    .next();
+  db.login(req.body);
+  res.sendStatus(200);
 });
 
 router.get('/product', async (req, res, next) => {
@@ -38,18 +38,19 @@ router.get('/product/:id', (req, res, next) => {
 
 router.post('/product', (req, res, next) => {
   db.createProduct(req.body);
-  res.sendStatus(200)
-    .next();
+  res.sendStatus(200);
 });
 
 router.put('/product/:id', (req, res, next) => {
+  db.updateProduct(req.body);
   res.sendStatus(200)
     .next();
 });
 
 router.delete('/product/:id', (req, res, next) => {
-  res.sendStatus(200)
-    .next();
+  const { id } = req.params;
+  db.deleteProduct(id);
+  res.sendStatus(200);
 });
 
 module.exports = router;

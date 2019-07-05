@@ -1,23 +1,26 @@
 {
-  "Thomas": {
-    "password": "test"
-  },
-  "Bob": {
-    "password": "asl;dkfjs;ld"
-  },
-  "Martin": {
-    "password": "newpass"
-  },
-  "Bea": {
-    "password": "abc123"
+  "Billy": {
+    "password": "$2b$10$4uCrAziYErEm8Y7lP5FVZOaohkZe4Z2BYW5odLCHDMyjBv3bal4JG"
   },
   "Henry": {
-    "password": "Henry_is_cool"
+    "password": "$2b$10$vjczxshumyl/ywyAwQSYmeDE5ocrQS9DruNtiiGpDMtszhecCcoDi"
   },
-  "Mohammed": {
-    "password": "password"
+  "Jamie": {
+    "password": "$2b$10$U3GRZP6tZHyfa0ETZKawxeXsiCyTYAwZuMsnNHziMW6D6C3pi4gKi"
   },
-  "Mohammed2": {
-    "password": "password"
+  "Katherine": {
+    "password": "$2b$10$eykZuqfPaVv3kpuStE7puO0NtjAkPPFvFztiNE6/cOlSf0HlD2K8a"
+  },
+  "Katherine2": {
+    "password": "$2b$10$XVKv56trqNRSvHFKco3xjO.2haPErB8K8dwXuh6O5.G4JjrxF2evu"
+  },
+  "Katherine3": {
+    "password": "$2b$10$/79BPpyLCciWMiJcaLferudc0o/oi72bSKj3bDjfWwXGUOGsipgmW"
+  },
+  "Katherine4": {
+    "password": "$2b$10$TSGH99LaytcPtaejUB6bIet3e7c2hDyoqvbyLnd5uonBGOkn.XIJK"
+  },
+  "Katherine5": {
+    "password": "$2b$10$GSo0uyiNzzNVkUGubDp3OuGbStf4a0syfJUEUfPsLneE9rA8HZlUq"
   }
 }

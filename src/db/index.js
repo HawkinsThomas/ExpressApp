@@ -1,45 +1,108 @@
+'use strict';
+
 const fs = require('fs');
 const util = require('util');
 const path = require('path');
+const bcrypt = require('bcrypt');
 
-let readFile = util.promisify(fs.readFile);
+const readFile = util.promisify(fs.readFile);
 //let writeFile = util.promisify(fs.writeFile);
 
 const productsPath = path.resolve('./src/db/product.json');
+const usersPath = path.resolve('./src/db/users.json');
 
 const register = (newUser) => {
-  fs.readFile('./src/db/users.json', 'utf8', (err, data) => {
-    if (err) throw err;
-    else {
+  readFile(usersPath)
+    .then((data) => {
       const users = JSON.parse(data);
-      if (users[Object.keys(newUser)[0]]){
+      const newUsername = newUser.username;
+      const newPass = newUser.password;
+      if (users[newUsername]){
         console.log("user already exists");
         return
       }
-      updatedUsers = {...users, ...newUser};
-      fs.writeFile('./src/db/users.json', JSON.stringify(updatedUsers, null, 2), 'utf8', (err) => {
+      console.log(newPass);
+      bcrypt.hash(newPass, 10, function(err, hash){
         if (err) throw err;
+        const hashedUser = {[newUsername]: {'password': hash}};
+        const updatedUsers = {...users, ...hashedUser};
+        fs.writeFile(usersPath, JSON.stringify(updatedUsers, null, 2), 'utf8', (err) => {
+          if (err) throw err;
+        });
       });
-    }
   });
 };
 
+const login = (user) => {
+  const username = user.username;
+  const password = user.password;
+  return doesUserExist(user.username)
+    .then((userExists) => {
+      if (!(userExists)) {
+        console.log('user does not exist')
+        return false;
+      } else {
+        readFile(usersPath)
+          .then((data) => {
+            const users = JSON.parse(data);
+            bcrypt.compare(password, users[username].password, function(err, res) {
+              if (res) {
+                console.log('login successful');
+                return true;
+              } else {
+                console.log('login failed')
+                return false;
+              }
+            });
+          });
+      }
+    });
+}
+
 const createProduct = (newProduct) => {
-  fs.readFile('./src/db/product.json', 'utf8', (err, data) => {
-    if (err) throw err;
-    else {
+  readFile(productsPath)
+    .then((data) => {
       const products = JSON.parse(data);
       if (products[Object.keys(newProduct)[0]]){
-        console.log("product already exists");
-        return
+        console.log('product already exists');
+        return;
       }
       updatedProducts = {...products, ...newProduct};
-      fs.writeFile('./src/db/product.json', JSON.stringify(updatedProducts, null, 2), 'utf8', (err) => {
+      fs.writeFile(productsPath, JSON.stringify(updatedProducts, null, 2), 'utf8', (err) => {
         if (err) throw err;
       });
-    }
+  });
+}
+
+const updateProduct = (newProduct) => {
+  readFile(productsPath)
+    .then((data) => {
+      const products = JSON.parse(data);
+      if (!(products[Object.keys(newProduct)[0]])){
+        console.log('product does not exist ');
+        return;
+      }
+      updatedProducts = {...products, ...newProduct};
+      fs.writeFile(productsPath, JSON.stringify(updatedProducts, null, 2), 'utf8', (err) => {
+        if (err) throw err;
+      });
   });
 };
+
+const deleteProduct = (product) => {
+  readFile(productsPath)
+    .then((data) => {
+      const products = JSON.parse(data);
+      if (!(products[product])){
+        console.log('product does not exist');
+        return;
+      }
+      delete products[product];
+      fs.writeFile(productsPath, JSON.stringify(products, null, 2), 'utf8', (err) => {
+        if (err) throw err;
+      });
+  });
+}
 
 function getAllProducts() {
   return readFile(productsPath)
@@ -48,6 +111,19 @@ function getAllProducts() {
     });
 };
 
-module.exports.register = register;
-module.exports.createProduct = createProduct;
-module.exports.getAllProducts = getAllProducts;
+function doesUserExist(user) {
+  return readFile(usersPath)
+    .then((data) => {
+      const users = JSON.parse(data);
+      return (!!(users[user]))
+    });
+}
+
+module.exports = {
+  register,
+  createProduct,
+  getAllProducts,
+  deleteProduct,
+  updateProduct,
+  login,
+}
