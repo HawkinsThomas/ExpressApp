@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <%- include('partials/head.ejs', { title: 'Forbidden – 403' }); %>
+  </head>
+  <body>
+    <%-
+      include('partials/body.ejs', {
+        code: 403,
+        message: 'Forbidden',
+      });
+    %>
+  </body>
+</html>

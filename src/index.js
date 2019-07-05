@@ -5,13 +5,11 @@ const router = require('./router');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const authenticate = require('./middleware/authentication.js');
-//const ejs = require('ejs');
+require('dotenv').config();
 
 const app = express();
 
 app.set('view engine', 'ejs');
-app.use('/static', express.static('./static'));
-app.use('/css', express.static('./css'));
 app.use(bodyParser.json());
 
 app.use(session({
@@ -25,12 +23,15 @@ app.use(session({
     httpOnly: true,
   },
 }));
+app.use('/static', express.static('./static'));
+app.use('/css', express.static('./css'));
 
 app.use(authenticate.parseUser);
 
+
 app.use(router);
 
-const port = 3000;
+const port = process.env.HTTP_PORT;
 app.listen(port, () => {
-  console.log('Express server started on port ${port}')
+  console.log(`Express server started on port ${port}`)
 });
