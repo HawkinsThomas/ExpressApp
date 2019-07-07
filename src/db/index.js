@@ -45,16 +45,16 @@ const login = (user) => {
         return readFile(usersPath)
           .then((data) => {
             const users = JSON.parse(data);
-            bcrypt.compare(password, users[username].password, function(err, res) {
-              if (res) {
-                console.log('login successful');
-                return true;
-              } else {
-                console.log('login failed')
-                return false;
-              }
+            return bcrypt.compare(password, users[username].password)
+              .then((res) => {
+                if (res) {
+                  console.log('login successful');
+                  return true;
+                } else {
+                  console.log('login failed')
+                  return false;
+                };
             });
-            return true;
           });
       };
     });
