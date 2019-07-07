@@ -21,7 +21,6 @@ const register = (newUser) => {
         console.log("user already exists");
         return
       }
-      console.log(newPass);
       bcrypt.hash(newPass, 10, function(err, hash){
         if (err) throw err;
         const hashedUser = {[newUsername]: {'password': hash}};
@@ -39,23 +38,24 @@ const login = (user) => {
   return doesUserExist(user.username)
     .then((userExists) => {
       if (!(userExists)) {
-        console.log('user does not exist')
+        console.log('user does not exist');
         return false;
       } else {
-        readFile(usersPath)
+        return readFile(usersPath)
           .then((data) => {
             const users = JSON.parse(data);
-            bcrypt.compare(password, users[username].password, function(err, res) {
-              if (res) {
-                console.log('login successful');
-                return true;
-              } else {
-                console.log('login failed')
-                return false;
-              }
+            return bcrypt.compare(password, users[username].password)
+              .then((res) => {
+                if (res) {
+                  console.log('login successful');
+                  return true;
+                } else {
+                  console.log('login failed')
+                  return false;
+                };
             });
           });
-      }
+      };
     });
 }
 
@@ -102,7 +102,7 @@ const deleteProduct = (product) => {
         if (err) throw err;
       });
   });
-}
+};
 
 function getAllProducts() {
   return readFile(productsPath)
@@ -117,7 +117,7 @@ function doesUserExist(user) {
       const users = JSON.parse(data);
       return (!!(users[user]))
     });
-}
+};
 
 module.exports = {
   register,
@@ -126,4 +126,4 @@ module.exports = {
   deleteProduct,
   updateProduct,
   login,
-}
+};

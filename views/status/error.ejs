@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <%- include('partials/head', { title: 'Internal Server Error – 500' }); %>
+  </head>
+  <body>
+    <%-
+      include('partials/body', {
+        code: 500,
+        message: 'Internal Server Error',
+      });
+    %>
+  </body>
+</html>
