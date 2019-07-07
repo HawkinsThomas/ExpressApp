@@ -21,7 +21,6 @@ const register = (newUser) => {
         console.log("user already exists");
         return
       }
-      console.log(newPass);
       bcrypt.hash(newPass, 10, function(err, hash){
         if (err) throw err;
         const hashedUser = {[newUsername]: {'password': hash}};

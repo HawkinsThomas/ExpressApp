@@ -1,5 +1,6 @@
 'use strict';
 const db = require('./../db');
+const authenticate = require ('../middleware/authentication.js');
 
 function allProducts(req, res, next) {
   if (req.session.username){

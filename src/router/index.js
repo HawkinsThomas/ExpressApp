@@ -20,7 +20,6 @@ router.post('/login', (req, res, next) => {
       if (validLogin) {
         req.session.username = req.body.username;
         res.redirect('/');
-        console.log('youre here cool guy');
       } else {
         res.render('status/forbidden');
       }
