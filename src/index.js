@@ -4,6 +4,7 @@ const express = require('express');
 const router = require('./router');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const defaultErrorHandler = require('./middleware/defaultErrorHandler.js')
 const authenticate = require('./middleware/authentication.js');
 require('dotenv').config();
 
@@ -30,6 +31,8 @@ app.use(authenticate.parseUser);
 
 
 app.use(router);
+
+app.use(defaultErrorHandler);
 
 const port = process.env.HTTP_PORT;
 app.listen(port, () => {

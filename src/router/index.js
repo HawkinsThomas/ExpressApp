@@ -11,14 +11,22 @@ router.get('/', productsRoutes.allProducts);
 router.post('/register', (req, res, next) => {
   console.log("someone is trying to register");
   db.register(req.body);
-  res.sendStatus(200)
-    .next();
+  res.sendStatus(200);
 });
 
 router.post('/login', (req, res, next) => {
-  db.login(req.body);
-  res.sendStatus(200);
+  db.login(req.body)
+    .then((validLogin) => {
+      if (validLogin) {
+        req.session.username = req.body.username;
+        res.redirect('/');
+        console.log('youre here cool guy');
+      } else {
+        res.render('status/forbidden');
+      }
+  });
 });
+
 
 router.get('/product', async (req, res, next) => {
   db.getAllProducts()
@@ -43,8 +51,7 @@ router.post('/product', (req, res, next) => {
 
 router.put('/product/:id', (req, res, next) => {
   db.updateProduct(req.body);
-  res.sendStatus(200)
-    .next();
+  res.sendStatus(200);
 });
 
 router.delete('/product/:id', (req, res, next) => {

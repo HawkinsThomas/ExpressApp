@@ -39,10 +39,10 @@ const login = (user) => {
   return doesUserExist(user.username)
     .then((userExists) => {
       if (!(userExists)) {
-        console.log('user does not exist')
+        console.log('user does not exist');
         return false;
       } else {
-        readFile(usersPath)
+        return readFile(usersPath)
           .then((data) => {
             const users = JSON.parse(data);
             bcrypt.compare(password, users[username].password, function(err, res) {
@@ -54,8 +54,9 @@ const login = (user) => {
                 return false;
               }
             });
+            return true;
           });
-      }
+      };
     });
 }
 
@@ -102,7 +103,7 @@ const deleteProduct = (product) => {
         if (err) throw err;
       });
   });
-}
+};
 
 function getAllProducts() {
   return readFile(productsPath)
@@ -117,7 +118,7 @@ function doesUserExist(user) {
       const users = JSON.parse(data);
       return (!!(users[user]))
     });
-}
+};
 
 module.exports = {
   register,
@@ -126,4 +127,4 @@ module.exports = {
   deleteProduct,
   updateProduct,
   login,
-}
+};
